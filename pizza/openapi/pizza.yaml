@@ -1,0 +1,71 @@
+openapi: 3.0.0
+info:
+  title: Pizza API
+  version: 1.0.0
+
+paths:
+  /menu:
+    get:
+      operationId: listMenu
+      summary: List available pizzas
+      responses:
+        "200":
+          description: Menu
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  pizzas:
+                    type: array
+                    items:
+                      type: string
+
+  /orders:
+    post:
+      operationId: placeOrder
+      summary: Place a pizza order
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pizza:
+                  type: string
+                size:
+                  type: string
+      responses:
+        "200":
+          description: Order placed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  order_id:
+                    type: string
+                  eta_minutes:
+                    type: number
+
+  /orders/{id}:
+    get:
+      operationId: getOrder
+      summary: Get order status
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
